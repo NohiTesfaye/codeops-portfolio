@@ -11,4 +11,4 @@ def digitalClock(seconds):
     return f"{hours:02}:{minutes:02}:{secs:02}"
 print(digitalClock(5025))    # "01:23:45"
 print(digitalClock(61201))   # "17:00:01"
-print(digitalClock(999999999999))   # "00:10:00"
+print(digitalClock(99999))   # "00:10:00"
