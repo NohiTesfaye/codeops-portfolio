@@ -1,0 +1,146 @@
+/* ==========================================================================
+   1. CSS Variables & Global Reset
+   ========================================================================== */
+:root {
+  /* Color Palette (HSL) */
+  --brand-primary: hsl(25, 75%, 35%);       /* Ethiopian Roast Coffee Brown */
+  --brand-hover: hsl(25, 75%, 47%);         /* Lighter shade using HSL lightness */
+  --accent-gold: hsl(45, 90%, 50%);         /* Ethiopian Coffee Gold */
+  --bg-color: hsl(35, 30%, 95%);            /* Light warm cream */
+  --card-bg: hsl(0, 0%, 100%);
+  --text-dark: hsl(20, 20%, 15%);
+  --text-muted: hsl(20, 10%, 45%);
+  --border-color: hsl(35, 20%, 88%);
+
+  /* Spacing Scale */
+  --space-xs: 6px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 32px;
+
+  /* Typography & Layout */
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+  --border-radius: 14px;
+  --transition-fast: 0.2s ease;
+}
+
+/* Global Box Sizing Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+}
+
+/* ==========================================================================
+   2. Card Component (Box Model Focus)
+   ========================================================================== */
+.card {
+  background-color: var(--card-bg);
+  width: 100%;
+  max-width: 380px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  padding: var(--space-lg);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+/* Header & Decorative Pseudo-Element */
+.card-header {
+  position: relative;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--border-color);
+}
+
+/* Decorative Gold Top Accent Bar (Pseudo-element) */
+.card-header::before {
+  content: "★ VERIFIED ADDIS BUSINESS";
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--brand-primary);
+  background-color: hsl(45, 90%, 92%);
+  padding: 3px var(--space-xs);
+  border-radius: 4px;
+  margin-bottom: var(--space-xs);
+}
+
+/* ==========================================================================
+   3. Typographic Hierarchy
+   ========================================================================== */
+.business-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--brand-primary);
+  line-height: 1.2;
+}
+
+.tagline {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.description {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  margin-bottom: var(--space-md);
+}
+
+.info-group p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.info-group strong {
+  color: var(--text-dark);
+}
+
+/* ==========================================================================
+   4. Interactive Button & Pseudo-classes
+   ========================================================================== */
+.card-footer {
+  margin-top: var(--space-lg);
+}
+
+.btn-contact {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--brand-primary);
+  color: #ffffff;
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+/* Hover state changes only lightness via --brand-hover variable */
+.btn-contact:hover {
+  background-color: var(--brand-hover);
+}
+
+/* Focus indicator preservation for accessibility */
+.btn-contact:focus-visible {
+  outline: 3px solid var(--accent-gold);
+  outline-offset: 2px;
+}

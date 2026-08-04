@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Exercise 5: Complete SEO & Standard Head Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethio Telecom Registration & Practice Exercises</title>
+    <meta name="description" content="Day 12 practice exercises covering HTML forms, tables, media, accessibility, and SEO.">
+</head>
+<body>
+
+    <header>
+        <h1>Day 12 Practice Exercises</h1>
+    </header>
+
+    <main>
+        <!-- Exercise 1: Ethio Telecom Registration Form -->
+        <section id="exercise-1">
+            <h2>Exercise 1: Ethio Telecom Registration</h2>
+
+            <!-- 
+                Justification: 
+                We use POST because user details (name, email, phone) are private personal information.
+                POST sends data inside the request body rather than in the browser URL bar.
+            -->
+            <form action="#" method="POST">
+                <fieldset>
+                    <legend>Subscriber Information</legend>
+
+                    <p>
+                        <label for="subscriber-name">Full Name:</label>
+                        <input type="text" id="subscriber-name" name="subscriber_name" required>
+                    </p>
+
+                    <p>
+                        <label for="subscriber-email">Email Address:</label>
+                        <input type="email" id="subscriber-email" name="subscriber_email" required>
+                    </p>
+
+                    <p>
+                        <label for="subscriber-phone">Phone (+251 format):</label>
+                        <input 
+                            type="tel" 
+                            id="subscriber-phone" 
+                            name="subscriber_phone" 
+                            pattern="\+2519[0-9]{8}" 
+                            placeholder="+251911234567" 
+                            required 
+                            title="Enter phone starting with +251 followed by 9 digits (e.g., +251911234567)">
+                    </p>
+
+                    <p>
+                        <label for="branch-select">Preferred Branch:</label>
+                        <select id="branch-select" name="branch" required>
+                            <option value="">-- Select a Branch --</option>
+                            <option value="bole">Bole</option>
+                            <option value="kazanchis">Kazanchis</option>
+                            <option value="piassa">Piassa</option>
+                        </select>
+                    </p>
+
+                    <button type="submit">Register Service</button>
+                </fieldset>
+            </form>
+        </section>
+
+        <!-- Exercise 2: Ethiopian Airlines Flight Table -->
+        <section id="exercise-2">
+            <h2>Exercise 2: Flight Schedule</h2>
+            <table>
+                <caption>Ethiopian Airlines Domestic Flight Schedule</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Flight</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">Departs</th>
+                        <th scope="col">Price (ETB)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">ET 302</th>
+                        <td>Addis Ababa (ADD)</td>
+                        <td>Dire Dawa (DIR)</td>
+                        <td>07:30 AM</td>
+                        <td>4,200 ETB</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ET 114</th>
+                        <td>Addis Ababa (ADD)</td>
+                        <td>Gondar (GDQ)</td>
+                        <td>09:15 AM</td>
+                        <td>5,100 ETB</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ET 206</th>
+                        <td>Addis Ababa (ADD)</td>
+                        <td>Mekelle (MQX)</td>
+                        <td>11:00 AM</td>
+                        <td>5,500 ETB</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ET 140</th>
+                        <td>Addis Ababa (ADD)</td>
+                        <td>Bahir Dar (BJR)</td>
+                        <td>02:30 PM</td>
+                        <td>4,800 ETB</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ET 182</th>
+                        <td>Addis Ababa (ADD)</td>
+                        <td>Hawassa (AWA)</td>
+                        <td>05:00 PM</td>
+                        <td>3,900 ETB</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Exercise 3: Figure + Map Media Block -->
+        <section id="exercise-3">
+            <h2>Exercise 3: Media Elements</h2>
+            
+            <figure>
+                <img 
+                    src="assets/dish.jpg" 
+                    alt="A traditional Ethiopian Beyaynetu platter with various colorful stews on top of injera." 
+                    loading="lazy">
+                <figcaption>Authentic Ethiopian Veggie Platter (Beyaynetu) served on Injera.</figcaption>
+            </figure>
+
+            <iframe 
+                title="Ethio Telecom Head Office Location Map"
+                src="https://maps.google.com/maps?q=Churchill+Avenue+Addis+Ababa&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+                width="600" 
+                height="350" 
+                style="border:0;" 
+                loading="lazy">
+            </iframe>
+        </section>
+
+        <!-- Exercise 4: Accessibility Rewrites -->
+        <section id="exercise-4">
+            <h2>Exercise 4: Accessibility Fixes</h2>
+
+            <!-- 
+                Fix 1: Replaced <div onclick="...">Submit</div> with a real <button type="submit">.
+                Benefit: Native keyboard focus via Tab key, pressable via Space and Enter keys, correct role announced to screen readers.
+            -->
+            <button type="button">Accessible Button</button>
+
+            <!-- 
+                Fix 2: Added <label for="user-email"> explicitly connected to <input id="user-email">.
+                Benefit: Screen readers read the field's name when focused; clicking the text focuses the input box.
+            -->
+            <p>
+                <label for="user-email">Email Address:</label>
+                <input type="email" id="user-email" name="email">
+            </p>
+
+            <!-- 
+                Fix 3: Added meaningful alt attribute to <img>.
+                Benefit: Screen readers describe the visual content to visually impaired users instead of reading a filename like "image1.jpg".
+            -->
+            <img src="./logo.png" alt="Ethio Telecom Official Logo">
+        </section>
+    </main>
+
+</body>
+</html>

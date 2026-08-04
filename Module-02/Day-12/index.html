@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Essentials -->
+    <title>Habesha Eatery | Authentic Ethiopian Restaurant & Reservations</title>
+    <meta name="description" content="Reserve a table at Habesha Eatery. Explore our authentic Ethiopian menu featuring Doro Wat, Beyaynetu, and traditional Jebena coffee.">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Habesha Eatery</h1>
+        <p>Authentic Ethiopian Cuisine & Cultural Dining Experience</p>
+    </header>
+
+    <main>
+        <!-- Hero Section with Media -->
+        <section id="hero">
+            <h2>Welcome to Our Table</h2>
+            <img 
+                src="assets/hero.jpg" 
+                alt="A traditional Ethiopian feast served on injera with various colorful stews." 
+                loading="lazy" 
+                width="800" 
+                height="400">
+        </section>
+
+        <!-- Reservation Form -->
+        <section id="reservations">
+            <h2>Book a Reservation</h2>
+            <form action="#" method="POST">
+                <fieldset>
+                    <legend>Guest & Time Details</legend>
+
+                    <p>
+                        <label for="full-name">Full Name:</label>
+                        <input type="text" id="full-name" name="full_name" required autocomplete="name">
+                    </p>
+
+                    <p>
+                        <label for="phone">Phone Number (09xxxxxxxx):</label>
+                        <input 
+                            type="tel" 
+                            id="phone" 
+                            name="phone" 
+                            pattern="09[0-9]{8}" 
+                            placeholder="0911234567" 
+                            required 
+                            title="Please enter a 10-digit Ethiopian mobile number starting with 09 (e.g. 0911234567)">
+                    </p>
+
+                    <p>
+                        <label for="guests">Number of Guests (1–20):</label>
+                        <input type="number" id="guests" name="guests" min="1" max="20" value="2" required>
+                    </p>
+
+                    <p>
+                        <label for="res-date">Reservation Date:</label>
+                        <input type="date" id="res-date" name="reservation_date" required>
+                    </p>
+
+                    <button type="submit">Confirm Reservation</button>
+                </fieldset>
+            </form>
+        </section>
+
+        <!-- Menu Table -->
+        <section id="menu">
+            <h2>Our Traditional Menu</h2>
+            <table>
+                <caption>Habesha Eatery Special Menu & Prices</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price (ETB)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Doro Wat</th>
+                        <td>Slow-cooked spicy chicken stew with boiled eggs and spiced butter.</td>
+                        <td>450 ETB</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Yetsom Beyaynetu</th>
+                        <td>Combination of lentils, yellow split peas, collard greens, and cabbage.</td>
+                        <td>350 ETB</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Special Kitfo</th>
+                        <td>Minced lean beef seasoned with mitmita and niter kibbeh.</td>
+                        <td>500 ETB</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Jebena Coffee Ceremony</th>
+                        <td>Freshly roasted traditional coffee served with popcorn.</td>
+                        <td>150 ETB</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Location Map iframe -->
+        <section id="location">
+            <h2>Find Us</h2>
+            <iframe>
+                title="Habesha Eatery Google Maps Location"
+                src="https://maps.google.com/maps?q=Bole+Addis+Ababa+Ethiopia&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+                width="600" 
+                height="450" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Habesha Eatery. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
