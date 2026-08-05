@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-grid">
+  <!-- Requirement 1: Grid Header -->
+  <header class="app-header">
+    <nav class="top-nav">
+      <div class="brand">Ethio Telecom Selfcare</div>
+      <div class="user-menu">
+        <span>+251 91 123 4567</span>
+        <button>Logout</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Requirement 4: Sticky Sidebar -->
+  <aside class="app-sidebar">
+    <ul class="nav-list">
+      <li>Dashboard</li>
+      <li>Packages & Recharges</li>
+      <li>Bill History</li>
+      <li>Support</li>
+    </ul>
+  </aside>
+
+  <!-- Requirement 1 & 2: Main Area with Flexbox Toolbar & Stats -->
+  <main class="app-main">
+    <div class="toolbar">
+      <h2>Account Overview</h2>
+      <button class="btn-primary">Buy Package</button>
+    </div>
+
+    <!-- Requirement 2: Flexbox Stat Row -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <h4>Airtime Balance</h4>
+        <p class="stat">184.50 ETB</p>
+      </div>
+      <div class="stat-card">
+        <h4>Active Data</h4>
+        <p class="stat">12.4 GB</p>
+      </div>
+      <div class="stat-card">
+        <h4>Free Minutes</h4>
+        <p class="stat">150 Min</p>
+      </div>
+    </div>
+
+    <h3>Available Add-ons</h3>
+    <!-- Requirement 3: Auto-fit Minmax Card Grid -->
+    <div class="card-grid">
+      <div class="package-card">Daily Unlimited - 15 ETB</div>
+      <div class="package-card">Weekly 5GB - 120 ETB</div>
+      <div class="package-card">Monthly Voice - 250 ETB</div>
+      <div class="package-card">Night Heavy Data - 40 ETB</div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <p>© 2026 Ethio Telecom. All rights reserved.</p>
+  </footer>
+</div>
+</body>
+</html>

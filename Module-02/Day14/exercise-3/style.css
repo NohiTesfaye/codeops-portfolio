@@ -1,0 +1,17 @@
+.gallery {
+  display: grid;
+  /* Automatically wraps items into min 200px columns that expand evenly */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.photo {
+  height: 180px;
+  background-color: #0d9488;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}

@@ -1,0 +1,29 @@
+/* styles.css */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Pushes logo left, group right */
+  align-items: center;            /* Vertically centers items */
+  padding: 1rem 2rem;
+  background-color: #1e293b;
+  color: #ffffff;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: #e2e8f0;
+  text-decoration: none;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

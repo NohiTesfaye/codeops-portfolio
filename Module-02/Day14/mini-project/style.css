@@ -1,0 +1,93 @@
+/* Skeleton Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-areas:
+    "header  header"
+    "sidebar main"
+    "footer  footer";
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+/* Flexbox Header Nav */
+.app-header {
+  grid-area: header;
+  position: sticky; /* Requirement 4 Option A: Sticky Header */
+  top: 0;
+  z-index: 100;
+  background: #22c55e; /* Ethio Telecom brand green */
+  color: white;
+}
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.app-sidebar {
+  grid-area: sidebar;
+  background: #f1f5f9;
+  padding: 1.5rem;
+}
+
+.app-main {
+  grid-area: main;
+  padding: 2rem;
+}
+
+/* Flexbox Toolbar & Stat Cards */
+.toolbar, .stats-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  flex: 1;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Responsive Package Grid using repeat(auto-fit, minmax(...)) */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.package-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+}
+
+.app-footer {
+  grid-area: footer;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "main"
+      "footer";
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-row {
+    flex-direction: column;
+  }
+}
