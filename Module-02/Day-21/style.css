@@ -1,0 +1,8 @@
+
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { padding: 8px; width: 300px; font-size: 14px; }
+        #error-area { color: red; margin-bottom: 15px; font-weight: bold; }
+        #stats-area { margin-top: 20px; font-style: italic; color: #555; }
+    
