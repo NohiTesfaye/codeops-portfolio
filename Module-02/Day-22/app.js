@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    
     const API_KEY = 'f049bb8848db41a49d5f644af7c1b38d'; 
 
     const fromCurrency = document.getElementById('fromCurrency');
@@ -8,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const result = document.getElementById('result');
     const convertButton = document.getElementById('convertButton');
 
-   
+    // Fetch currency list once
     fetch(`https://api.currencyfreaks.com/v2.0/rates/latest?apikey=${API_KEY}`)
         .then(response => response.json())
         .then(data => {
@@ -26,21 +25,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 toCurrency.appendChild(option2);
             });
 
-        
-            fromCurrency.value = 'USD';
+            // Default selections
+            fromCurrency.value = 'ETB';
             toCurrency.value = 'EUR';
 
-          
-            fromCurrency.addEventListener('change', updateResult);
-            toCurrency.addEventListener('change', updateResult);
-            amount.addEventListener('input', updateResult);
+            // Only trigger conversion when button is clicked
             convertButton.addEventListener('click', updateResult);
 
-            
+            // Make dropdowns searchable
             makeDropdownSearchable(fromCurrency);
             makeDropdownSearchable(toCurrency);
-
-            updateResult(); 
         })
         .catch(error => {
             console.error('Error fetching currency list:', error);
@@ -51,6 +45,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const from = fromCurrency.value;
         const to = toCurrency.value;
         const amt = amount.value;
+
+        if (!amt || isNaN(amt)) {
+            result.textContent = 'Please enter a valid amount.';
+            return;
+        }
 
         fetch(`https://api.currencyfreaks.com/v2.0/rates/latest?apikey=${API_KEY}`)
             .then(response => response.json())
