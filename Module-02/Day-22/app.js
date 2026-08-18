@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 toCurrency.appendChild(option2);
             });
 
-            // Default selections
+            
             fromCurrency.value = 'ETB';
             toCurrency.value = 'EUR';
 

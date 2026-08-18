@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Addis Eats | Ethiopian Food</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="header-content">
+            <div>
+                <h1>Addis Eats</h1>
+                <p>Authentic Ethiopian food in Addis Ababa</p>
+            </div>
+
+            <div class="search-container">
+                <label for="search">Search dishes</label>
+                <input
+                    type="search"
+                    id="search"
+                    placeholder="Search dishes..."
+                >
+            </div>
+        </div>
+    </header>
+
+
+    <main class="main-content">
+
+        <section class="menu-section" aria-labelledby="menu-heading">
+
+            <div class="section-header">
+                <h2 id="menu-heading">Our Menu</h2>
+
+                <div class="filter-container">
+                    <label for="category-filter">Category</label>
+
+                    <select id="category-filter">
+                        <option value="All">All</option>
+                        <option value="Main">Main</option>
+                        <option value="Vegetarian">Vegetarian</option>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Side">Side</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="menu" class="menu-grid" aria-live="polite">
+                <!-- JavaScript will render dishes here -->
+            </div>
+
+        </section>
+
+
+        <aside class="cart-section" aria-labelledby="cart-heading">
+
+            <h2 id="cart-heading">Your Order</h2>
+
+            <div id="cart">
+                <!-- JavaScript will render cart items here -->
+            </div>
+
+            <div class="cart-summary">
+                <p>
+                    Total:
+                    <strong id="cart-total">0 ETB</strong>
+                </p>
+
+                <button id="checkout-btn" type="button">
+                    Checkout
+                </button>
+            </div>
+
+        </aside>
+
+    </main>
+
+
+    <footer class="site-footer">
+        <p>Addis Eats · Bole, Addis Ababa</p>
+        <p>Payment: TeleBirr</p>
+    </footer>
+
+
+    <script src="./app.js"></script>
+
+</body>
+</html>
