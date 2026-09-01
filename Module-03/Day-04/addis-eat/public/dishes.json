@@ -1,0 +1,6 @@
+[
+  { "id": 1, "name": "Doro Wat", "price": 450, "category": "Traditional", "description": "Spicy chicken stew simmered in berbere sauce with a hard-boiled egg." },
+  { "id": 2, "name": "Shiro", "price": 200, "category": "Fasting", "description": "Smooth, spiced chickpea puree cooked with onions and garlic." },
+  { "id": 3, "name": "Kitfo", "price": 500, "category": "Traditional", "description": "Minced lean beef warmed in spiced clarified butter and mitmita." },
+  { "id": 4, "name": "Traditional Coffee", "price": 50, "category": "Beverages", "description": "Aromatic Ethiopian coffee served in a traditional clay jebena." }
+]
