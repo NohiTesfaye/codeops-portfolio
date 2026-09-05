@@ -1,0 +1,14 @@
+[
+  { "id": "d1", "name": "Doro Wat", "category": "Stews", "price": 320, "description": "Slow-simmered chicken in berbere and spiced butter, served with a boiled egg.", "image": "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=400&q=80" },
+  { "id": "d2", "name": "Tibs", "category": "Stews", "price": 290, "description": "Pan-fried beef with onion, rosemary, and green chili.", "image": "https://images.unsplash.com/photo-1626082927389-6a97ffc7a63e?w=400&q=80" },
+  { "id": "d3", "name": "Misir Wat", "category": "Vegetarian", "price": 210, "description": "Red lentils simmered in berbere and garlic, deeply savory.", "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&q=80" },
+  { "id": "d4", "name": "Shiro", "category": "Vegetarian", "price": 200, "description": "Roasted chickpea flour stew, smooth and lightly spiced.", "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&q=80" },
+  { "id": "d5", "name": "Kitfo", "category": "Raw & Cured", "price": 340, "description": "Minced beef warmed in mitmita and niter kibbeh, served leb-leb.", "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80" },
+  { "id": "d6", "name": "Gomen", "category": "Vegetarian", "price": 180, "description": "Collard greens braised with garlic and ginger.", "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&q=80" },
+  { "id": "d7", "name": "Kikil", "category": "Stews", "price": 300, "description": "Beef shank in a light garlic-lemon broth, falling off the bone.", "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80" },
+  { "id": "d8", "name": "Fir-fir", "category": "Breakfast", "price": 150, "description": "Shredded injera tossed in berbere sauce and clarified butter.", "image": "https://images.unsplash.com/photo-1600628421055-4d30de868b8f?w=400&q=80" },
+  { "id": "d9", "name": "Chechebsa", "category": "Breakfast", "price": 140, "description": "Torn flatbread pan-fried with spiced butter and berbere.", "image": "https://images.unsplash.com/photo-1600628421055-4d30de868b8f?w=400&q=80" },
+  { "id": "d10", "name": "Atkilt Wat", "category": "Vegetarian", "price": 190, "description": "Cabbage, carrot, and potato slow-cooked with turmeric.", "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&q=80" },
+  { "id": "d11", "name": "Zilzil Tibs", "category": "Raw & Cured", "price": 330, "description": "Strips of beef tenderloin, char-grilled and tossed with jalapeño.", "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80" },
+  { "id": "d12", "name": "Bunna", "category": "Drinks", "price": 60, "description": "Traditional Ethiopian coffee, roasted and brewed to order.", "image": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400&q=80" }
+]
