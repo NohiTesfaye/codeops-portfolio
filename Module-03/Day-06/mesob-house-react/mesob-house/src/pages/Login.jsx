@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../AuthContext";
+import { useAuthStore } from "../store/useAuthStore";
+import { loginSchema } from "../schemas/loginSchema";
 import {
   ArrowRightIcon,
   AwardIcon,
@@ -13,18 +15,29 @@ import {
 
 export default function Login() {
   const navigate = useNavigate();
-  const {
-    signInWithGoogle,
-    signInWithTelebirr,
-    signInWithPhone,
-    continueAsGuest,
-  } = useAuth();
+  const signInWithGoogle = useAuthStore((s) => s.signInWithGoogle);
+  const signInWithTelebirr = useAuthStore((s) => s.signInWithTelebirr);
+  const signInWithPhone = useAuthStore((s) => s.signInWithPhone);
+  const continueAsGuest = useAuthStore((s) => s.continueAsGuest);
 
-  const [tab, setTab] = useState("phone"); // phone | email
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [pin, setPin] = useState("");
-  const [remember, setRemember] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      channel: "phone",
+      phone: "",
+      email: "",
+      pin: "",
+      remember: false,
+    },
+  });
+
+  const channel = watch("channel");
 
   function goHome() {
     navigate("/");
@@ -45,9 +58,8 @@ export default function Login() {
     goHome();
   }
 
-  function handleSignIn(e) {
-    e.preventDefault();
-    signInWithPhone(tab === "phone" ? phone : email);
+  function onSubmit(data) {
+    signInWithPhone(data.channel === "phone" ? data.phone : data.email);
     goHome();
   }
 
@@ -91,70 +103,54 @@ export default function Login() {
       <div className="tab-row">
         <button
           type="button"
-          className={`tab-btn ${tab === "phone" ? "active" : ""}`}
-          onClick={() => setTab("phone")}
+          className={`tab-btn ${channel === "phone" ? "active" : ""}`}
+          onClick={() => setValue("channel", "phone", { shouldValidate: true })}
         >
           <PhoneIcon size={16} /> Ethiopian Mobile (+251)
         </button>
         <button
           type="button"
-          className={`tab-btn ${tab === "email" ? "active" : ""}`}
-          onClick={() => setTab("email")}
+          className={`tab-btn ${channel === "email" ? "active" : ""}`}
+          onClick={() => setValue("channel", "email", { shouldValidate: true })}
         >
           <MailIcon size={16} /> Email Address
         </button>
       </div>
 
-      <form onSubmit={handleSignIn}>
-        {tab === "phone" ? (
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        {channel === "phone" ? (
           <>
             <label className="field-label">
               Mobile Number <span className="field-hint">Ethio Telecom / Safaricom</span>
             </label>
-            <div className="phone-field">
+            <div className={`phone-field ${errors.phone ? "field-error" : ""}`}>
               <span className="flag">ET +251</span>
-              <input
-                type="tel"
-                placeholder="91 123 4567"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
+              <input type="tel" placeholder="91 123 4567" {...register("phone")} />
             </div>
+            {errors.phone && <p className="field-error-msg">{errors.phone.message}</p>}
           </>
         ) : (
           <>
             <label className="field-label">Email Address</label>
-            <div className="phone-field">
-              <input
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+            <div className={`phone-field ${errors.email ? "field-error" : ""}`}>
+              <input type="email" placeholder="you@example.com" {...register("email")} />
             </div>
+            {errors.email && <p className="field-error-msg">{errors.email.message}</p>}
           </>
         )}
 
         <label className="field-label" style={{ marginTop: 14 }}>
           Secret Password / PIN
         </label>
-        <div className="phone-field">
+        <div className={`phone-field ${errors.pin ? "field-error" : ""}`}>
           <LockIcon size={16} />
-          <input
-            type="password"
-            placeholder="••••••••"
-            value={pin}
-            onChange={(e) => setPin(e.target.value)}
-          />
+          <input type="password" placeholder="••••••••" {...register("pin")} />
         </div>
+        {errors.pin && <p className="field-error-msg">{errors.pin.message}</p>}
 
         <div className="remember-row">
           <label>
-            <input
-              type="checkbox"
-              checked={remember}
-              onChange={(e) => setRemember(e.target.checked)}
-            />
+            <input type="checkbox" {...register("remember")} />
             Remember me on this phone
           </label>
           <a href="#forgot" onClick={(e) => e.preventDefault()}>
@@ -162,7 +158,7 @@ export default function Login() {
           </a>
         </div>
 
-        <button type="submit" className="primary-btn signin-btn">
+        <button type="submit" className="primary-btn signin-btn" disabled={isSubmitting}>
           Sign In to Mesob House <ArrowRightIcon size={16} />
         </button>
       </form>

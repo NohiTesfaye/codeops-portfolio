@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { CategoryIcon } from "../Icons";
-import { useCart } from "../CartContext";
+import { useCartStore } from "../store/useCartStore";
 
 export default function DishCard({ dish }) {
-  const { addToCart } = useCart();
+  const addToCart = useCartStore((state) => state.addToCart);
 
   return (
     <div className="dish-card">

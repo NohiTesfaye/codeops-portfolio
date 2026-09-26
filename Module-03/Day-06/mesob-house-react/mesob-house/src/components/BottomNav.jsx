@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { useCart } from "../CartContext";
+import { useCartTotalItems } from "../store/useCartStore";
 import { StarIcon, ListIcon, BasketIcon, UserIcon } from "../Icons";
 
 export default function BottomNav() {
-  const { totalItems } = useCart();
+  const totalItems = useCartTotalItems();
 
   return (
     <nav className="bottom-nav">

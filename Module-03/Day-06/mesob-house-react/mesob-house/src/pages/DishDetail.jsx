@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchMenu } from "../api";
 import { CategoryIcon, BackArrowIcon } from "../Icons";
-import { useCart } from "../CartContext";
+import { useCartStore } from "../store/useCartStore";
 
 export default function DishDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useCart();
+  const addToCart = useCartStore((state) => state.addToCart);
   const [dish, setDish] = useState(null);
   const [status, setStatus] = useState("loading");
 

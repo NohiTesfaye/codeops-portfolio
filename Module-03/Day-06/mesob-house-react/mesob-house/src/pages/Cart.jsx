@@ -1,9 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../CartContext";
+import { useCartStore, useCartTotalItems, useCartTotalPrice } from "../store/useCartStore";
 import { CategoryIcon, CloseIcon } from "../Icons";
 
 export default function Cart() {
-  const { items, changeQty, removeFromCart, totalPrice, totalItems } = useCart();
+  const items = useCartStore((state) => state.items);
+  const changeQty = useCartStore((state) => state.changeQty);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const totalItems = useCartTotalItems();
+  const totalPrice = useCartTotalPrice();
   const navigate = useNavigate();
 
   const deliveryFee = items.length > 0 ? 60 : 0;
@@ -72,7 +76,7 @@ export default function Cart() {
             <button
               className="primary-btn"
               style={{ marginTop: 18 }}
-              onClick={() => alert("Order placed! (demo checkout)")}
+              onClick={() => navigate("/checkout")}
             >
               Proceed to Checkout — ETB {grandTotal}
             </button>

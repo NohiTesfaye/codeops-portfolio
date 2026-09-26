@@ -1,36 +1,54 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import BottomNav from "./components/BottomNav";
-import Menu from "./pages/Menu";
-import Specials from "./pages/Specials";
-import DishDetail from "./pages/DishDetail";
-import Cart from "./pages/Cart";
-import Login from "./pages/Login";
-import Account from "./pages/Account";
-import { useAuth } from "./AuthContext";
+import ErrorBoundary from "./ErrorBoundary";
+import { useAuthStore } from "./store/useAuthStore";
+
+const Menu = lazy(() => import("./pages/Menu"));
+const Specials = lazy(() => import("./pages/Specials"));
+const DishDetail = lazy(() => import("./pages/DishDetail"));
+const Cart = lazy(() => import("./pages/Cart"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const Login = lazy(() => import("./pages/Login"));
+const Account = lazy(() => import("./pages/Account"));
+
+function PageLoader() {
+  return <div className="screen loading">Loading…</div>;
+}
 
 export default function App() {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const location = useLocation();
 
   if (!isAuthenticated) {
     return (
       <div className="app-shell">
-        <Routes>
-          <Route path="*" element={<Login />} />
-        </Routes>
+        <ErrorBoundary key={location.pathname}>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="*" element={<Login />} />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
       </div>
     );
   }
 
   return (
     <div className="app-shell">
-      <Routes>
-        <Route path="/" element={<Menu />} />
-        <Route path="/specials" element={<Specials />} />
-        <Route path="/dish/:slug" element={<DishDetail />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/login" element={<Navigate to="/" replace />} />
-      </Routes>
+      <ErrorBoundary key={location.pathname}>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Menu />} />
+            <Route path="/specials" element={<Specials />} />
+            <Route path="/dish/:slug" element={<DishDetail />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/login" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
       <BottomNav />
     </div>
   );

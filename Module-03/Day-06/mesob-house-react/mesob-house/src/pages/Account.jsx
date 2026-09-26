@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../AuthContext";
+import { useAuthStore } from "../store/useAuthStore";
 import { UserIcon } from "../Icons";
 
 export default function Account() {
-  const { user, signOut } = useAuth();
+  const user = useAuthStore((s) => s.user);
+  const signOut = useAuthStore((s) => s.signOut);
   const navigate = useNavigate();
 
   return (
