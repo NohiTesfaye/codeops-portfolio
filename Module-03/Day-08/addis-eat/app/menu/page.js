@@ -3,18 +3,14 @@ import { Suspense } from "react";
 
 export const revalidate = 60;
 
-function DishList() {
+async function DishList() {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   return (
     <ul>
-      <li>
-        <Link href="/menu/1">Doro Wat</Link>
-      </li>
-      <li>
-        <Link href="/menu/2">Tibs</Link>
-      </li>
-      <li>
-        <Link href="/menu/3">Shiro</Link>
-      </li>
+      <li><Link href="/menu/1">Doro Wat</Link></li>
+      <li><Link href="/menu/2">Tibs</Link></li>
+      <li><Link href="/menu/3">Shiro</Link></li>
     </ul>
   );
 }
