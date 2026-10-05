@@ -1,0 +1,24 @@
+.menu-layout {
+  display: flex;
+  gap: 30px;
+}
+
+.menu-layout aside {
+  width: 220px;
+  flex-shrink: 0;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.menu-layout aside ul {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-layout aside li {
+  margin-bottom: 12px;
+}
+
+.menu-layout section {
+  flex: 1;
+}
