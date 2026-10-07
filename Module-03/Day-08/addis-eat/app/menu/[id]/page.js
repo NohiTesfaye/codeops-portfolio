@@ -1,13 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { db, getDish } from "../../../db";
 
-const dishes = [
-  { id: "1", name: "Doro Wat" },
-  { id: "2", name: "Tibs" },
-  { id: "3", name: "Shiro" },
-];
+export async function generateStaticParams() {
+  const dishes = await db.dish.findMany();
 
-export function generateStaticParams() {
   return dishes.map((dish) => ({
     id: dish.id,
   }));
@@ -15,8 +12,7 @@ export function generateStaticParams() {
 
 export default async function DishPage({ params }) {
   const { id } = await params;
-
-  const dish = dishes.find((dish) => dish.id === id);
+  const dish = await getDish(id);
 
   if (!dish) {
     notFound();
@@ -25,7 +21,14 @@ export default async function DishPage({ params }) {
   return (
     <main>
       <h1>{dish.name}</h1>
-      <p>This is the {dish.name} dish page.</p>
+      <p>{dish.description}</p>
+      <p>
+        <strong>
+          {dish.price} {dish.currency}
+        </strong>
+      </p>
+      <p>Category: {dish.category}</p>
+
       <Link href="/menu">Back to Menu</Link>
     </main>
   );

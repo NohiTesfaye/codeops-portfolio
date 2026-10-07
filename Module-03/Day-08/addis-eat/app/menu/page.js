@@ -1,16 +1,26 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { db } from "../../db";
 
 export const revalidate = 60;
 
 async function DishList() {
+  const dishes = await db.dish.findMany();
+
+  // Simulate a slow database response so the Suspense fallback can stream first.
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   return (
     <ul>
-      <li><Link href="/menu/1">Doro Wat</Link></li>
-      <li><Link href="/menu/2">Tibs</Link></li>
-      <li><Link href="/menu/3">Shiro</Link></li>
+      {dishes
+        .filter((dish) => dish.available)
+        .map((dish) => (
+          <li key={dish.id}>
+            <Link href={`/menu/${dish.id}`}>
+              {dish.name} - {dish.price} {dish.currency}
+            </Link>
+          </li>
+        ))}
     </ul>
   );
 }
