@@ -1,4 +1,4 @@
-import { z } from "zod";
+﻿import { z } from "zod";
 
 export const orderSchema = z.object({
   name: z
@@ -9,7 +9,7 @@ export const orderSchema = z.object({
     .string({ required_error: "Phone number is required" })
     .regex(
       /^(09|\+2519)\d{8}$/,
-      "Phone number must start with 09… or +2519… followed by 8 digits"
+      "Phone number must start with 09 or +2519 followed by 8 digits"
     ),
 
   dishId: z.string().optional(),
@@ -25,3 +25,4 @@ export const orderSchema = z.object({
     .max(200, "Notes cannot exceed 200 characters")
     .optional(),
 });
+

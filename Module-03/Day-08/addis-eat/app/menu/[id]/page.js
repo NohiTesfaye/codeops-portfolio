@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db, getDish } from "../../../db";
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const dishes = await db.dish.findMany();
