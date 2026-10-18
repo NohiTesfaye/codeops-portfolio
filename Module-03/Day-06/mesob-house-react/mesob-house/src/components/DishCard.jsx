@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+﻿"use client";
+
+import Link from "next/link";
 import { CategoryIcon } from "../Icons";
 import { useCartStore } from "../store/useCartStore";
 
@@ -7,7 +9,10 @@ export default function DishCard({ dish }) {
 
   return (
     <div className="dish-card">
-      <Link to={`/dish/${dish.slug}`} style={{ display: "flex", gap: 12, flex: 1, minWidth: 0 }}>
+      <Link
+        href={`/dish/${dish.slug}`}
+        style={{ display: "flex", gap: 12, flex: 1, minWidth: 0 }}
+      >
         <div className="dish-thumb">
           <CategoryIcon category={dish.category} size={26} />
         </div>
@@ -21,12 +26,10 @@ export default function DishCard({ dish }) {
           <div className="dish-price">ETB {dish.priceETB}</div>
         </div>
       </Link>
+
       <button
         className="add-btn"
-        onClick={(e) => {
-          e.preventDefault();
-          addToCart(dish);
-        }}
+        onClick={() => addToCart(dish)}
         aria-label={`Add ${dish.nameEn} to cart`}
       >
         +

@@ -1,6 +1,8 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useCartStore, useCartTotalPrice } from "../store/useCartStore";
 import { checkoutSchema } from "../schemas/checkoutSchema";
@@ -10,7 +12,7 @@ export default function Checkout() {
   const items = useCartStore((state) => state.items);
   const clearCart = useCartStore((state) => state.clearCart);
   const totalPrice = useCartTotalPrice();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [placed, setPlaced] = useState(false);
 
   const {
@@ -42,9 +44,9 @@ export default function Checkout() {
   if (items.length === 0 && !placed) {
     return (
       <div className="screen empty-state">
-        Your basket is empty — add a dish before checking out.
+        Your basket is empty - add a dish before checking out.
         <div style={{ marginTop: 14 }}>
-          <button className="primary-btn" onClick={() => navigate("/")}>
+          <button className="primary-btn" onClick={() => router.push("/")}>
             Browse the menu
           </button>
         </div>
@@ -58,9 +60,11 @@ export default function Checkout() {
         <h3 style={{ color: "var(--maroon-dark)", marginBottom: 8 }}>
           Order confirmed
         </h3>
-        <p>Your Gursha Basket is on its way. Betam ameseginalehu!</p>
+        <p>
+          Your Gursha Basket is on its way. Betam ameseginalehu!
+        </p>
         <div style={{ marginTop: 14 }}>
-          <button className="primary-btn" onClick={() => navigate("/")}>
+          <button className="primary-btn" onClick={() => router.push("/")}>
             Back to menu
           </button>
         </div>
@@ -72,7 +76,7 @@ export default function Checkout() {
     <>
       <div className="topbar">
         <div className="brand">Delivery &amp; Checkout</div>
-        <div className="tagline">Step 2 of 3 · Delivery details</div>
+        <div className="tagline">Step 2 of 3 - Delivery details</div>
       </div>
 
       <div className="screen">
@@ -85,7 +89,9 @@ export default function Checkout() {
           <div className={`phone-field ${errors.fullName ? "field-error" : ""}`}>
             <input placeholder="Abebe Bekele" {...register("fullName")} />
           </div>
-          {errors.fullName && <p className="field-error-msg">{errors.fullName.message}</p>}
+          {errors.fullName && (
+            <p className="field-error-msg">{errors.fullName.message}</p>
+          )}
 
           <label className="field-label" style={{ marginTop: 14 }}>
             Phone (Calls &amp; SMS confirmation)
@@ -94,29 +100,44 @@ export default function Checkout() {
             <span className="flag">ET +251</span>
             <input type="tel" placeholder="91 145 7890" {...register("phone")} />
           </div>
-          {errors.phone && <p className="field-error-msg">{errors.phone.message}</p>}
+          {errors.phone && (
+            <p className="field-error-msg">{errors.phone.message}</p>
+          )}
 
           <h3 className="section-title">Delivery Destination</h3>
 
           <label className="field-label">Sub-City / Neighbourhood</label>
           <div className={`phone-field ${errors.subCity ? "field-error" : ""}`}>
-            <input placeholder="Bole Sub-city, Edna Mall area" {...register("subCity")} />
+            <input
+              placeholder="Bole Sub-city, Edna Mall area"
+              {...register("subCity")}
+            />
           </div>
-          {errors.subCity && <p className="field-error-msg">{errors.subCity.message}</p>}
+          {errors.subCity && (
+            <p className="field-error-msg">{errors.subCity.message}</p>
+          )}
 
           <label className="field-label" style={{ marginTop: 14 }}>
             House No. / Street
           </label>
           <div className={`phone-field ${errors.street ? "field-error" : ""}`}>
-            <input placeholder="Behind Edna Mall, House No. 402" {...register("street")} />
+            <input
+              placeholder="Behind Edna Mall, House No. 402"
+              {...register("street")}
+            />
           </div>
-          {errors.street && <p className="field-error-msg">{errors.street.message}</p>}
+          {errors.street && (
+            <p className="field-error-msg">{errors.street.message}</p>
+          )}
 
           <label className="field-label" style={{ marginTop: 14 }}>
             Landmark &amp; Gate Color (optional)
           </label>
           <div className="phone-field">
-            <input placeholder="Opposite to Boston Day Spa, green entrance" {...register("landmark")} />
+            <input
+              placeholder="Opposite Boston Day Spa, green entrance"
+              {...register("landmark")}
+            />
           </div>
 
           <h3 className="section-title">Delivery Method</h3>
@@ -130,6 +151,7 @@ export default function Checkout() {
               />
               Immediate Delivery
             </label>
+
             <label className={`tab-btn ${deliveryMethod === "pickup" ? "active" : ""}`}>
               <input
                 type="radio"
@@ -160,7 +182,8 @@ export default function Checkout() {
             style={{ marginTop: 18 }}
             disabled={isSubmitting}
           >
-            Confirm Order &amp; Pay — ETB {grandTotal} <ArrowRightIcon size={16} />
+            Confirm Order &amp; Pay - ETB {grandTotal}{" "}
+            <ArrowRightIcon size={16} />
           </button>
         </form>
       </div>

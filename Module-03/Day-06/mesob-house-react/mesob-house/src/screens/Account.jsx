@@ -1,11 +1,13 @@
-import { useNavigate } from "react-router-dom";
+"use client";
+
+import { useRouter } from "next/navigation";
 import { useAuthStore } from "../store/useAuthStore";
 import { UserIcon } from "../Icons";
 
 export default function Account() {
   const user = useAuthStore((s) => s.user);
   const signOut = useAuthStore((s) => s.signOut);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <>
@@ -29,10 +31,14 @@ export default function Account() {
 
         <button
           className="primary-btn"
-          style={{ background: "#fff", color: "var(--maroon)", border: "1px solid var(--line)" }}
+          style={{
+            background: "#fff",
+            color: "var(--maroon)",
+            border: "1px solid var(--line)",
+          }}
           onClick={() => {
             signOut();
-            navigate("/login");
+            router.push("/login");
           }}
         >
           Sign out

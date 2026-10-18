@@ -1,37 +1,38 @@
-import { NavLink } from "react-router-dom";
+﻿"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCartTotalItems } from "../store/useCartStore";
 import { StarIcon, ListIcon, BasketIcon, UserIcon } from "../Icons";
 
 export default function BottomNav() {
+  const pathname = usePathname();
   const totalItems = useCartTotalItems();
 
   return (
     <nav className="bottom-nav">
-      <NavLink to="/specials" className={({ isActive }) => (isActive ? "active" : "")}>
-        <span className="nav-icon">
-          <StarIcon size={19} />
-        </span>
+      <Link href="/specials" className={pathname === "/specials" ? "active" : ""}>
+        <span className="nav-icon"><StarIcon size={19} /></span>
         Specials
-      </NavLink>
-      <NavLink to="/" end className={({ isActive }) => (isActive ? "active" : "")}>
-        <span className="nav-icon">
-          <ListIcon size={19} />
-        </span>
+      </Link>
+
+      <Link href="/" className={pathname === "/" ? "active" : ""}>
+        <span className="nav-icon"><ListIcon size={19} /></span>
         Menu
-      </NavLink>
-      <NavLink to="/cart" className={({ isActive }) => (isActive ? "active" : "")}>
+      </Link>
+
+      <Link href="/cart" className={pathname === "/cart" ? "active" : ""}>
         <span className="nav-icon">
           <BasketIcon size={19} />
           {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
         </span>
         Cart
-      </NavLink>
-      <NavLink to="/account" className={({ isActive }) => (isActive ? "active" : "")}>
-        <span className="nav-icon">
-          <UserIcon size={19} />
-        </span>
+      </Link>
+
+      <Link href="/account" className={pathname === "/account" ? "active" : ""}>
+        <span className="nav-icon"><UserIcon size={19} /></span>
         Account
-      </NavLink>
+      </Link>
     </nav>
   );
 }

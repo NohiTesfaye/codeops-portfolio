@@ -1,6 +1,8 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { useAuthStore } from "../store/useAuthStore";
 import { loginSchema } from "../schemas/loginSchema";
 import {
@@ -14,7 +16,7 @@ import {
 } from "../Icons";
 
 export default function Login() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const signInWithGoogle = useAuthStore((s) => s.signInWithGoogle);
   const signInWithTelebirr = useAuthStore((s) => s.signInWithTelebirr);
   const signInWithPhone = useAuthStore((s) => s.signInWithPhone);
@@ -40,7 +42,7 @@ export default function Login() {
   const channel = watch("channel");
 
   function goHome() {
-    navigate("/");
+    router.push("/");
   }
 
   function handleGoogle() {
@@ -144,7 +146,7 @@ export default function Login() {
         </label>
         <div className={`phone-field ${errors.pin ? "field-error" : ""}`}>
           <LockIcon size={16} />
-          <input type="password" placeholder="••••••••" {...register("pin")} />
+          <input type="password" placeholder="Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢" {...register("pin")} />
         </div>
         {errors.pin && <p className="field-error-msg">{errors.pin.message}</p>}
 
