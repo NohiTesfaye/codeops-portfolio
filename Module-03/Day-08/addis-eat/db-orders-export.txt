@@ -1,0 +1,15 @@
+Add the following at the end of db.js only if it does not already export getOrders().
+This assumes the in-memory order array used by createOrder() is named `orders`.
+
+/**
+ * Read-only order snapshot for the server-rendered dashboard and order list.
+ * The application uses an in-memory demo store, so this data is not persistent.
+ */
+export async function getOrders() {
+  return orders.map((order) => ({
+    ...order,
+    items: Array.isArray(order?.items)
+      ? order.items.map((item) => ({ ...item }))
+      : [],
+  }));
+}

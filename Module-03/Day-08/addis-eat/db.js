@@ -119,3 +119,17 @@ export async function markCancelled(id) {
 export async function getSession() {
   return mockSessionUser;
 }
+
+
+/**
+ * Return a read-only snapshot of the in-memory orders.
+ * Orders are not persisted after the server process restarts.
+ */
+export async function getOrders() {
+  return mockOrders.map((order) => ({
+    ...order,
+    items: Array.isArray(order?.items)
+      ? order.items.map((item) => ({ ...item }))
+      : [],
+  }));
+}
