@@ -1,9 +1,10 @@
+
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "../store/useAuthStore";
 import { loginSchema } from "../schemas/loginSchema";
 import {
   ArrowRightIcon,
@@ -15,12 +16,12 @@ import {
   TelebirrMark,
 } from "../Icons";
 
+const HERO_IMAGE =
+  "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85";
+
 export default function Login() {
   const router = useRouter();
-  const signInWithGoogle = useAuthStore((s) => s.signInWithGoogle);
-  const signInWithTelebirr = useAuthStore((s) => s.signInWithTelebirr);
-  const signInWithPhone = useAuthStore((s) => s.signInWithPhone);
-  const continueAsGuest = useAuthStore((s) => s.continueAsGuest);
+  const [authError, setAuthError] = useState("");
 
   const {
     register,
@@ -41,168 +42,285 @@ export default function Login() {
 
   const channel = watch("channel");
 
-  function goHome() {
-    router.push("/");
-  }
+  async function onSubmit(data) {
+    setAuthError("");
 
-  function handleGoogle() {
-    signInWithGoogle();
-    goHome();
-  }
+    if (data.channel !== "email") {
+      setAuthError(
+        "Email login is available in this demo. Choose Email Address to continue."
+      );
+      return;
+    }
 
-  function handleTelebirr() {
-    signInWithTelebirr();
-    goHome();
-  }
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({
+          email: data.email,
+          password: data.pin,
+        }),
+      });
 
-  function handleGuest() {
-    continueAsGuest();
-    goHome();
-  }
+      const result = await response.json();
 
-  function onSubmit(data) {
-    signInWithPhone(data.channel === "phone" ? data.phone : data.email);
-    goHome();
+      if (!response.ok) {
+        setAuthError(result.error || "Unable to sign in. Please try again.");
+        return;
+      }
+
+      router.push("/");
+      router.refresh();
+    } catch {
+      setAuthError(
+        "Couldn't connect to the server. Please check your connection and try again."
+      );
+    }
   }
 
   return (
-    <div className="screen login-screen">
-      <div className="login-eyebrow">Enkuan Dehna Metahu</div>
+    <main className="login-page">
+      <section className="login-layout">
+        <div className="login-visual">
+          <img
+            className="login-visual-image"
+            src={HERO_IMAGE}
+            alt="A colourful meal prepared for sharing"
+            onError={(event) => {
+              event.currentTarget.style.display = "none";
+            }}
+          />
 
-      <div className="login-hero">
-        <div className="login-hero-thumb">
-          <LockIcon size={26} />
+          <div className="login-visual-shade" />
+
+          <a href="/" className="login-brand">
+            <span className="login-brand-mark">M</span>
+            <span>
+              Mesob <em>House</em>
+            </span>
+          </a>
+
+          <div className="login-visual-copy">
+            <span className="login-kicker">WELCOME TO OUR TABLE</span>
+            <h1>
+              Good food.
+              <br />
+              <em>Good company.</em>
+            </h1>
+            <p>
+              Come together over the flavours, warmth, and traditions of
+              Ethiopian dining.
+            </p>
+            <div className="login-image-note">
+              <span className="login-note-dot" />
+              Made for sharing, made with care
+            </div>
+          </div>
+
+          <div className="login-visual-footer">
+            <span>ENKUAN DEHNA METAHU</span>
+            <span>ETHIOPIAN HOSPITALITY, EVERY DAY</span>
+          </div>
         </div>
-        <div>
-          <h1 className="login-title">Welcome to the Mesob Table</h1>
-          <p className="login-sub">
-            Sign in to manage your feasts, Telebirr rewards, and reserved dining
-            mesobs.
+
+        <div className="login-panel">
+          <div className="login-panel-top">
+            <span className="login-mobile-brand">
+              <span className="login-brand-mark">M</span>
+              Mesob <em>House</em>
+            </span>
+            <span className="login-secure-label">
+              <LockIcon size={14} />
+              Secure sign in
+            </span>
+          </div>
+
+          <div className="login-heading">
+            <span className="login-kicker">YOUR TABLE AWAITS</span>
+            <h2>Welcome back.</h2>
+            <p>Sign in to continue to Mesob House.</p>
+          </div>
+
+          {authError && (
+            <div className="login-alert" role="alert">
+              <span className="login-alert-icon">!</span>
+              <span>{authError}</span>
+            </div>
+          )}
+
+          <div className="login-social-stack">
+            <button
+              type="button"
+              className="login-social-btn login-telebirr"
+              onClick={() =>
+                setAuthError(
+                  "Telebirr sign-in is not configured in this demo yet."
+                )
+              }
+            >
+              <span className="login-social-icon">
+                <TelebirrMark size={24} />
+              </span>
+              <span className="login-social-copy">
+                <strong>Continue with Telebirr</strong>
+                <small>Mobile payment integration coming later</small>
+              </span>
+              <ArrowRightIcon size={17} />
+            </button>
+
+            <button
+              type="button"
+              className="login-social-btn login-google"
+              onClick={() =>
+                setAuthError(
+                  "Google sign-in is not configured in this demo yet."
+                )
+              }
+            >
+              <span className="login-social-icon">
+                <GoogleMark size={21} />
+              </span>
+              <span className="login-social-copy">
+                <strong>Continue with Google</strong>
+                <small>Google authentication not connected</small>
+              </span>
+              <ArrowRightIcon size={17} />
+            </button>
+          </div>
+
+          <div className="login-divider">
+            <span />
+            <p>OR SIGN IN WITH EMAIL</p>
+            <span />
+          </div>
+
+          <div className="login-tabs" role="group" aria-label="Sign-in method">
+            <button
+              type="button"
+              className={channel === "email" ? "active" : ""}
+              aria-pressed={channel === "email"}
+              onClick={() => {
+                setAuthError("");
+                setValue("channel", "email", { shouldValidate: true });
+              }}
+            >
+              <MailIcon size={16} />
+              Email
+            </button>
+            <button
+              type="button"
+              className={channel === "phone" ? "active" : ""}
+              aria-pressed={channel === "phone"}
+              onClick={() => {
+                setAuthError("");
+                setValue("channel", "phone", { shouldValidate: true });
+              }}
+            >
+              <PhoneIcon size={16} />
+              Mobile
+            </button>
+          </div>
+
+          <form className="login-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+            {channel === "email" ? (
+              <div className="login-field">
+                <label htmlFor="login-email">Email address</label>
+                <div className={`login-input-wrap ${errors.email ? "has-error" : ""}`}>
+                  <MailIcon size={18} />
+                  <input
+                    id="login-email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                    {...register("email")}
+                  />
+                </div>
+                {errors.email && (
+                  <p className="login-field-error">{errors.email.message}</p>
+                )}
+              </div>
+            ) : (
+              <div className="login-field">
+                <label htmlFor="login-phone">Mobile number</label>
+                <div className={`login-input-wrap ${errors.phone ? "has-error" : ""}`}>
+                  <span className="login-country-code">ET +251</span>
+                  <input
+                    id="login-phone"
+                    type="tel"
+                    autoComplete="tel"
+                    placeholder="91 123 4567"
+                    {...register("phone")}
+                  />
+                </div>
+                <p className="login-field-hint">
+                  Phone-number sign-in is not enabled in this demo.
+                </p>
+                {errors.phone && (
+                  <p className="login-field-error">{errors.phone.message}</p>
+                )}
+              </div>
+            )}
+
+            <div className="login-field">
+              <label htmlFor="login-password">Password</label>
+              <div className={`login-input-wrap ${errors.pin ? "has-error" : ""}`}>
+                <LockIcon size={18} />
+                <input
+                  id="login-password"
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="Enter your password"
+                  {...register("pin")}
+                />
+              </div>
+              {errors.pin && (
+                <p className="login-field-error">{errors.pin.message}</p>
+              )}
+            </div>
+
+            <label className="login-remember">
+              <input type="checkbox" {...register("remember")} />
+              <span className="login-custom-check" />
+              <span>Remember me</span>
+            </label>
+
+            <button
+              type="submit"
+              className="login-submit"
+              disabled={isSubmitting}
+            >
+              <span>{isSubmitting ? "Signing in..." : "Sign in to Mesob House"}</span>
+              <ArrowRightIcon size={18} />
+            </button>
+          </form>
+
+          <button
+            type="button"
+            className="login-guest"
+            onClick={() => router.push("/")}
+          >
+            Continue as guest
+          </button>
+
+          <div className="login-member-note">
+            <span className="login-member-icon">
+              <AwardIcon size={20} />
+            </span>
+            <div>
+              <strong>A little more to enjoy</strong>
+              <p>
+                Member rewards and online registration can be added when those
+                features are connected.
+              </p>
+            </div>
+          </div>
+
+          <p className="login-legal">
+            By continuing, you agree to use Mesob House responsibly.
           </p>
         </div>
-      </div>
-
-      <button className="social-btn telebirr-btn" onClick={handleTelebirr}>
-        <TelebirrMark size={28} />
-        <span>
-          <strong>Telebirr SuperApp Fast Login</strong>
-          <small>Instant one-tap verification via Ethio Telecom</small>
-        </span>
-        <ArrowRightIcon size={16} />
-      </button>
-
-      <button className="social-btn google-btn" onClick={handleGoogle}>
-        <GoogleMark size={22} />
-        <span>
-          <strong>Continue with Google</strong>
-        </span>
-      </button>
-
-      <div className="divider">
-        <span>OR WITH PHONE / EMAIL</span>
-      </div>
-
-      <div className="tab-row">
-        <button
-          type="button"
-          className={`tab-btn ${channel === "phone" ? "active" : ""}`}
-          onClick={() => setValue("channel", "phone", { shouldValidate: true })}
-        >
-          <PhoneIcon size={16} /> Ethiopian Mobile (+251)
-        </button>
-        <button
-          type="button"
-          className={`tab-btn ${channel === "email" ? "active" : ""}`}
-          onClick={() => setValue("channel", "email", { shouldValidate: true })}
-        >
-          <MailIcon size={16} /> Email Address
-        </button>
-      </div>
-
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        {channel === "phone" ? (
-          <>
-            <label className="field-label">
-              Mobile Number <span className="field-hint">Ethio Telecom / Safaricom</span>
-            </label>
-            <div className={`phone-field ${errors.phone ? "field-error" : ""}`}>
-              <span className="flag">ET +251</span>
-              <input type="tel" placeholder="91 123 4567" {...register("phone")} />
-            </div>
-            {errors.phone && <p className="field-error-msg">{errors.phone.message}</p>}
-          </>
-        ) : (
-          <>
-            <label className="field-label">Email Address</label>
-            <div className={`phone-field ${errors.email ? "field-error" : ""}`}>
-              <input type="email" placeholder="you@example.com" {...register("email")} />
-            </div>
-            {errors.email && <p className="field-error-msg">{errors.email.message}</p>}
-          </>
-        )}
-
-        <label className="field-label" style={{ marginTop: 14 }}>
-          Secret Password / PIN
-        </label>
-        <div className={`phone-field ${errors.pin ? "field-error" : ""}`}>
-          <LockIcon size={16} />
-          <input type="password" placeholder="Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢" {...register("pin")} />
-        </div>
-        {errors.pin && <p className="field-error-msg">{errors.pin.message}</p>}
-
-        <div className="remember-row">
-          <label>
-            <input type="checkbox" {...register("remember")} />
-            Remember me on this phone
-          </label>
-          <a href="#forgot" onClick={(e) => e.preventDefault()}>
-            Forgot PIN?
-          </a>
-        </div>
-
-        <button type="submit" className="primary-btn signin-btn" disabled={isSubmitting}>
-          Sign In to Mesob House <ArrowRightIcon size={16} />
-        </button>
-      </form>
-
-      <button className="guest-btn" onClick={handleGuest}>
-        Continue as Guest
-      </button>
-
-      <div className="register-banner">
-        <div className="register-copy">
-          <strong>New to our dining family?</strong>
-          <p>Join the Mesob Table and get 50 ETB welcome credit.</p>
-        </div>
-        <a href="#register" onClick={(e) => e.preventDefault()}>
-          Register
-        </a>
-      </div>
-
-      <div className="benefits-card">
-        <div className="benefits-title">
-          <AwardIcon size={16} />
-          Mesob Member Benefits
-          <span className="gursha-tier">GURSHA TIER</span>
-        </div>
-        <div className="benefits-row">
-          <div className="benefit-pill">
-            <AwardIcon size={18} />
-            <strong>10 Gursha Pts</strong>
-            <small>Per ETB 100 spent</small>
-          </div>
-          <div className="benefit-pill">
-            <AwardIcon size={18} />
-            <strong>Free Bole Drop</strong>
-            <small>Kazanchis &amp; Bole zone</small>
-          </div>
-          <div className="benefit-pill">
-            <AwardIcon size={18} />
-            <strong>Jebena Buna</strong>
-            <small>Sunday Roasting VIP</small>
-          </div>
-        </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
