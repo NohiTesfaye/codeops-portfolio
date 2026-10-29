@@ -1,15 +1,11 @@
-﻿
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCartTotalItems } from "../store/useCartStore";
-import {
-  StarIcon,
-  UserIcon,
-} from "../Icons";
+import { StarIcon, UserIcon } from "../Icons";
 
-function MenuIcon({ size = 19 }) {
+function MenuIcon({ size = 20 }) {
   return (
     <svg
       width={size}
@@ -17,7 +13,7 @@ function MenuIcon({ size = 19 }) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
@@ -29,14 +25,15 @@ function MenuIcon({ size = 19 }) {
   );
 }
 
-function ShoppingBagIcon({ size = 19 }) {  return (
+function ShoppingBagIcon({ size = 20 }) {
+  return (
     <svg
       width={size}
       height={size}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
@@ -47,58 +44,52 @@ function ShoppingBagIcon({ size = 19 }) {  return (
   );
 }
 
+const NAV_ITEMS = [
+  { href: "/", label: "Menu", Icon: MenuIcon },
+  { href: "/specials", label: "Specials", Icon: StarIcon },
+  { href: "/cart", label: "Cart", Icon: ShoppingBagIcon, isCart: true },
+  { href: "/account", label: "Account", Icon: UserIcon },
+];
+
+function isActive(pathname, href) {
+  if (href === "/") return pathname === "/" || pathname.startsWith("/dish");
+  if (href === "/cart") return pathname === "/cart" || pathname === "/checkout";
+  return pathname === href;
+}
+
 export default function BottomNav() {
   const pathname = usePathname();
   const totalItems = useCartTotalItems();
 
   return (
     <nav className="bottom-nav" aria-label="Main navigation">
-      <Link
-        href="/specials"
-        className={pathname === "/specials" ? "active" : ""}
-        aria-current={pathname === "/specials" ? "page" : undefined}
-      >
-        <span className="nav-icon">
-          <StarIcon size={19} />
-        </span>
-        <span>Specials</span>
-      </Link>
+      {NAV_ITEMS.map(({ href, label, Icon, isCart }) => {
+        const active = isActive(pathname, href);
 
-      <Link
-        href="/"
-        className={pathname === "/" ? "active" : ""}
-        aria-current={pathname === "/" ? "page" : undefined}
-      >
-        <span className="nav-icon">
-          <MenuIcon size={21} />
-        </span>
-        <span>Menu</span>
-      </Link>
-
-      <Link
-        href="/cart"
-        className={pathname === "/cart" ? "active" : ""}
-        aria-current={pathname === "/cart" ? "page" : undefined}
-      >
-        <span className="nav-icon">
-          <ShoppingBagIcon size={20} />
-          {totalItems > 0 && (
-            <span className="cart-badge">{totalItems}</span>
-          )}
-        </span>
-        <span>Cart</span>
-      </Link>
-
-      <Link
-        href="/account"
-        className={pathname === "/account" ? "active" : ""}
-        aria-current={pathname === "/account" ? "page" : undefined}
-      >
-        <span className="nav-icon">
-          <UserIcon size={19} />
-        </span>
-        <span>Account</span>
-      </Link>
+        return (
+          <Link
+            key={href}
+            href={href}
+            className={active ? "active" : ""}
+            aria-current={active ? "page" : undefined}
+            aria-label={
+              isCart && totalItems > 0
+                ? `Cart, ${totalItems} ${totalItems === 1 ? "item" : "items"}`
+                : label
+            }
+          >
+            <span className="nav-icon">
+              <Icon size={20} />
+              {isCart && totalItems > 0 && (
+                <span className="cart-badge" key={totalItems}>
+                  {totalItems > 99 ? "99+" : totalItems}
+                </span>
+              )}
+            </span>
+            <span>{label}</span>
+          </Link>
+        );
+      })}
     </nav>
   );
 }
