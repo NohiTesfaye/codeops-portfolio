@@ -158,7 +158,7 @@ select:focus-visible {
 
 .menu-topbar,
 .specials-topbar {
-  padding: 26px 34px 62px;
+  padding: 22px 34px 34px;
   background:
     radial-gradient(ellipse at 78% 45%, rgba(255, 90, 43, 0.20), transparent 46%),
     linear-gradient(135deg, #14161a 0%, #1c1f25 100%);
@@ -172,9 +172,9 @@ select:focus-visible {
   right: 0;
   bottom: -1px;
   left: 0;
-  height: 30px;
+  height: 22px;
   content: "";
-  clip-path: polygon(0 62%, 3% 36%, 6% 66%, 10% 30%, 14% 60%, 19% 26%, 23% 56%, 28% 22%, 33% 58%, 38% 30%, 43% 64%, 48% 28%, 53% 60%, 58% 24%, 63% 56%, 68% 32%, 73% 66%, 78% 26%, 83% 58%, 88% 30%, 93% 62%, 97% 34%, 100% 56%, 100% 100%, 0 100%);
+  clip-path: polygon(0.0% 48%, 3.5% 53%, 6.3% 32%, 9.5% 34%, 11.7% 31%, 15.1% 41%, 16.6% 55%, 18.9% 43%, 20.5% 55%, 22.1% 64%, 23.7% 42%, 26.5% 65%, 30.0% 64%, 32.7% 31%, 36.2% 30%, 38.9% 36%, 40.9% 37%, 43.5% 64%, 45.6% 80%, 48.5% 34%, 51.2% 68%, 53.0% 34%, 55.6% 32%, 58.2% 67%, 60.1% 71%, 62.6% 77%, 64.7% 65%, 68.2% 51%, 70.2% 78%, 72.0% 77%, 74.0% 64%, 76.0% 59%, 79.3% 74%, 81.7% 66%, 85.3% 35%, 87.8% 38%, 90.9% 37%, 94.3% 54%, 95.8% 70%, 97.4% 63%, 100% 60%, 100% 100%, 0 100%);
 }
 .menu-topbar::after { background: #fff; }
 .specials-topbar::after { background: var(--cream); }
@@ -218,10 +218,10 @@ select:focus-visible {
 .menu-hero,
 .specials-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.9fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   align-items: center;
   gap: 30px;
-  padding: 38px 0 30px;
+  padding: 24px 0 12px;
 }
 .specials-hero { padding-bottom: 15px; }
 
@@ -242,7 +242,7 @@ select:focus-visible {
   margin-top: 12px;
   color: #ffffff;
   font-family: "Fraunces", Georgia, serif;
-  font-size: clamp(32px, 4.3vw, 53px);
+  font-size: clamp(30px, 3.4vw, 44px);
   font-weight: 600;
   letter-spacing: -1.7px;
   line-height: 1.08;
@@ -252,7 +252,7 @@ select:focus-visible {
 .menu-hero-copy > p,
 .specials-hero-copy > p {
   max-width: 400px;
-  margin: 16px 0 22px;
+  margin: 12px 0 18px;
   color: rgba(255, 255, 255, 0.74);
   font-size: 14px;
   line-height: 1.8;
@@ -277,14 +277,19 @@ select:focus-visible {
 
 .menu-hero-image {
   position: relative;
-  justify-self: center;
-  width: min(100%, 300px);
-  aspect-ratio: 1;
+  min-width: 0;
+  height: 230px;
   overflow: hidden;
   background: #2a2d33;
-  border: 6px solid rgba(255, 255, 255, 0.08);
-  border-radius: 50%;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+  border-radius: 20px;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.4);
+}
+.menu-hero-image::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(20, 22, 26, 0.88) 0%, rgba(20, 22, 26, 0) 40%);
+  content: "";
+  pointer-events: none;
 }
 .menu-hero-image .hero-image-caption { display: none; }
 
@@ -1115,12 +1120,12 @@ select:focus-visible {
   .dish-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 
   .menu-hero, .specials-hero { grid-template-columns: minmax(0, 1fr) minmax(210px, 0.8fr); gap: 22px; }
-  .menu-hero-image { width: min(100%, 240px); }
+  .menu-hero-image { height: 200px; }
 }
 
 @media (max-width: 640px) {
   .topbar { border-radius: 0 0 22px 22px; }
-  .menu-topbar, .specials-topbar { padding: 21px 18px 50px; border-radius: 0; }
+  .menu-topbar, .specials-topbar { padding: 18px 18px 30px; border-radius: 0; }
 
   .menu-topbar-content { align-items: flex-start; }
   .brand-link { gap: 8px; }
@@ -1128,10 +1133,10 @@ select:focus-visible {
   .brand-link > span:last-child { font-size: 21px; }
   .topbar-note { max-width: 105px; padding-top: 5px; font-size: 10px; text-align: right; }
 
-  .menu-hero, .specials-hero { grid-template-columns: minmax(0, 1fr); gap: 19px; padding: 30px 0 22px; }
-  .menu-hero h1, .specials-hero h1 { font-size: clamp(34px, 9vw, 45px); letter-spacing: -1.1px; }
+  .menu-hero, .specials-hero { grid-template-columns: minmax(0, 1fr); gap: 19px; padding: 18px 0 10px; }
+  .menu-hero h1, .specials-hero h1 { font-size: clamp(28px, 8vw, 36px); letter-spacing: -1.1px; }
   .menu-hero-copy > p, .specials-hero-copy > p { margin: 12px 0 17px; font-size: 13px; }
-  .menu-hero-image { width: 210px; }
+  .menu-hero-image { height: 150px; }
   .specials-hero-image { height: 205px; }
 
   .menu-sticky { padding: 10px 16px 6px; }

@@ -1,7 +1,9 @@
-﻿"use client";
+"use client";
 
 import { usePathname } from "next/navigation";
 import BottomNav from "./BottomNav";
+
+const NO_NAV = ["/login", "/register"];
 
 export default function AppShell({ children }) {
   const pathname = usePathname();
@@ -9,7 +11,7 @@ export default function AppShell({ children }) {
   return (
     <div className="app-shell">
       {children}
-      {pathname !== "/login" && <BottomNav />}
+      {!NO_NAV.includes(pathname) && <BottomNav />}
     </div>
   );
 }

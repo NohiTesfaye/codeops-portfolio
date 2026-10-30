@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { loginSchema } from "../schemas/loginSchema";
+import { loginUser, safeNextPath, useSession } from "../lib/clientAuth";
 import { EyeIcon, GoogleMark, LockIcon, MailIcon, TelebirrMark } from "../Icons";
 
 function EyeOffIcon({ size = 18 }) {
@@ -29,6 +31,7 @@ function EyeOffIcon({ size = 18 }) {
 
 export default function Login() {
   const router = useRouter();
+  const { status } = useSession();
   const [notice, setNotice] = useState(null); // { type: "error" | "info", text }
   const [showPassword, setShowPassword] = useState(false);
 
@@ -41,35 +44,15 @@ export default function Login() {
     defaultValues: { email: "", password: "" },
   });
 
+  // Already signed in (or just signed in): leave the login page
+  useEffect(() => {
+    if (status === "authenticated") router.replace(safeNextPath());
+  }, [status, router]);
+
   async function onSubmit(data) {
     setNotice(null);
-
-    try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "same-origin",
-        body: JSON.stringify({ email: data.email, password: data.password }),
-      });
-
-      const result = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        setNotice({
-          type: "error",
-          text: result.error || "Unable to sign in. Please try again.",
-        });
-        return;
-      }
-
-      router.push("/");
-      router.refresh();
-    } catch {
-      setNotice({
-        type: "error",
-        text: "Couldn't connect to the server. Check your connection and try again.",
-      });
-    }
+    const result = await loginUser(data);
+    if (!result.ok) setNotice({ type: "error", text: result.error });
   }
 
   return (
@@ -142,9 +125,7 @@ export default function Login() {
                 {showPassword ? <EyeOffIcon /> : <EyeIcon size={18} />}
               </button>
             </div>
-            {errors.password && (
-              <p className="ui-error">{errors.password.message}</p>
-            )}
+            {errors.password && <p className="ui-error">{errors.password.message}</p>}
           </div>
 
           <div className="ui-row-end">
@@ -180,28 +161,15 @@ export default function Login() {
           Continue with Telebirr <span className="soon-pill">Soon</span>
         </button>
 
-        <button
-          type="button"
-          className="ui-btn ui-btn--ghost"
-          onClick={() => router.push("/")}
-        >
+        <button type="button" className="ui-btn ui-btn--ghost" onClick={() => router.push("/")}>
           Continue as guest
         </button>
 
         <p className="ui-footnote">
           Don&apos;t have an account?{" "}
-          <button
-            type="button"
-            className="ui-link"
-            onClick={() =>
-              setNotice({
-                type: "info",
-                text: "Online sign-up isn't available yet. You can continue as a guest to order.",
-              })
-            }
-          >
+          <Link href="/register" className="ui-link">
             Sign up
-          </button>
+          </Link>
         </p>
       </div>
     </main>
